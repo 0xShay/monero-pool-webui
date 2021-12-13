@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300&display=swap');
+
+* {
+    font-family: 'Readex Pro',
+    sans-serif;
+}
+
+body {
+    padding: 0 15vw;
+    text-align: center;
+}
+
+nav {
+    margin-bottom: 2vw;
+}

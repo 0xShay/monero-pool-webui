@@ -1,0 +1,52 @@
+<div class="row mb-3">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header p-3">Pool hashrate</div>
+            <div class="card-text p-3"><%= data.pool_hashrate %></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header p-3">Block effort (%)</div>
+            <div class="card-text p-3"><%= ((data.round_hashes / data.network_difficulty) * 100).toFixed(4) %>%</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header p-3">Network height</div>
+            <div class="card-text p-3"><%= data.network_height %></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header p-3">Pool blocks found</div>
+            <div class="card-text p-3"><%= data.pool_blocks_found %></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header p-3">Network hashrate</div>
+            <div class="card-text p-3"><%= data.network_hashrate %></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header p-3">Connected miners</div>
+            <div class="card-text p-3"><%= data.connected_miners %></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header p-3">Min payout</div>
+            <div class="card-text p-3"><%= data.payment_threshold %> XMR</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header p-3">Pool fee</div>
+            <div class="card-text p-3"><%= data.pool_fee * 100 %>%</div>
+        </div>
+    </div>
+</div>
