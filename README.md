@@ -2,6 +2,8 @@
 
 This is a simple expressjs web UI wrapper for jtgrassie's Monero pool found at https://github.com/jtgrassie/monero-pool - full credit goes to him for the actual pool.
 
+![image](https://user-images.githubusercontent.com/33174842/145904347-5b407b70-0395-4afc-9f0f-db71c70e3120.png)
+
 # Setup
 
 1) set up monero node
