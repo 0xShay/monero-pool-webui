@@ -1,5 +1,34 @@
 <%- include(`./incl/head.html`) %>
     <%- include(`./incl/header.html`) %>
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header p-2">Information</div>
+                <div class="card-text p-4">
+                    <p class="mb-3">
+                        You can connect to the mining pool by poining your RandomX client to
+                        <code>xmr.shay.services:4243</code> with your username set to your Monero address.
+                        If you want to choose a starting difficulty, specify <code>d=[diff]</code> in your
+                        password.
+                    </p>
+                    <p class="mb-3">
+                        Example startup script for xmrig:<br>
+                        <code>xmrig --coin 'monero' -o xmr.shay.services:4242 -u YOUR_XMR_WALLET_ADDRESS -p x</code>
+                    </p>
+                    <p class="mb-0">
+                        Want to learn how to optimize your miner to get the best hashrate possible, or need
+                        some help?
+                    </p>
+                    <p class="mb-0">
+                        Join us on Discord! <a href="https://discord.gg/MhTM8CYZX3">https://discord.gg/MhTM8CYZX3</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
         <%- include(`./incl/poolStats.html`) %>
         <%- include(`./incl/searchBar.html`) %>
+        <% if (data.address) { %>
+            <%- include(`./incl/addressStats.html`) %>
+        <% } %>
 <%- include(`./incl/footer.html`) %>

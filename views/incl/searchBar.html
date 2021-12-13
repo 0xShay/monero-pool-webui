@@ -1,4 +1,17 @@
-<form class="form-group mt-4">
-    <input class="form-control mb-3" type="search" placeholder="Address" aria-label="Search" name="a">
-    <button type="submit" class="btn btn-primary">Lookup address</button>
-</form>
+<input class="form-control mb-3 mt-3" type="search" placeholder="Search a Monero address to see miner stats..." aria-label="Search" id="addressInput">
+<button type="submit" class="btn btn-primary mb-2" onclick="searchAddress()">Lookup address</button>
+
+<br>
+
+<script>
+    if ("<%= data.address %>" != "") {
+        document.getElementById("addressInput").value = "<%= data.address %>";
+    }
+    function searchAddress() {
+        if (document.getElementById("addressInput").value == "") {
+            window.location.href = `../..`;
+        } else {
+            window.location.href = `../../stats/${document.getElementById("addressInput").value}`;
+        }
+    }
+</script>

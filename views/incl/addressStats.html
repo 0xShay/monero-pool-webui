@@ -1,0 +1,54 @@
+<h5>Stats for <code><%= data.address %></code></h5>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header p-2">Your hashrate</div>
+            <div class="card-text p-2"><%= data.miner_hashrate_stats[1] %></div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header p-2">Pending balance</div>
+            <div class="card-text p-2"><%= data.miner_balance.toFixed(8) %> XMR</div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <div class="card">
+            <div class="card-header p-2">2m</div>
+            <div class="card-text p-2"><%= data.miner_hashrate_stats[0] %></div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card">
+            <div class="card-header p-2">10m</div>
+            <div class="card-text p-2"><%= data.miner_hashrate_stats[1] %></div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card">
+            <div class="card-header p-2">30m</div>
+            <div class="card-text p-2"><%= data.miner_hashrate_stats[2] %></div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card">
+            <div class="card-header p-2">1h</div>
+            <div class="card-text p-2"><%= data.miner_hashrate_stats[3] %></div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card">
+            <div class="card-header p-2">1d</div>
+            <div class="card-text p-2"><%= data.miner_hashrate_stats[4] %></div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card">
+            <div class="card-header p-2">1w</div>
+            <div class="card-text p-2"><%= data.miner_hashrate_stats[5] %></div>
+        </div>
+    </div>
+</div>
