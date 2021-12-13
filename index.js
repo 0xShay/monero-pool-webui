@@ -47,7 +47,7 @@ fetchData = async (address="83iyvgajvmCSMLeZsEpQUbP3LwxU1zxsGVaTJ2G8n7CBVHQvsHeE
         }
     };
     
-    let fetchedData = await(await fetch(`http://xmr.shay.services:4243/stats`, opts)).json();
+    let fetchedData = await(await fetch(`${process.env.POOL_ENDPOINT}/stats`, opts)).json();
     fetchedData["pool_hashrate"] = formatHash(fetchedData["pool_hashrate"]);
     fetchedData["network_hashrate"] = formatHash(fetchedData["network_hashrate"]);
     fetchedData["network_height"] = formatNumber(fetchedData["miner_hashrate"]);
