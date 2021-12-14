@@ -96,8 +96,8 @@ updateData = async () => {
         hashrateData["data"].push(recentData["pool_hashrate_raw"]);
         hashrateData["labels"] = hashrateData["labels"].slice(-720);
         hashrateData["data"] = hashrateData["data"].slice(-720);
-        addGraphData = !addGraphData;
     }
+    addGraphData = !addGraphData;
 };
 
 updateData()
