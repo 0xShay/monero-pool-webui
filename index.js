@@ -5,15 +5,6 @@ const env = require(`dotenv`).config({ path: '.env' });
 const http = require(`http`);
 const https = require(`https`);
 
-if (process.env.USE_SSL == "true") {
-    const privateKey = fs.readFileSync(process.env.SSL_KEY_PATH, `utf8`);
-    const certificate = fs.readFileSync(process.env.SSL_CRT_PATH, `utf8`);
-    const credentials = {
-        key: privateKey,
-        cert: certificate
-    };
-}
-
 const app = express();
 const port = 3000;
 
@@ -99,6 +90,12 @@ updateData()
 setInterval(updateData, 60000)
 
 if (process.env.USE_SSL == "true") {
+    const privateKey = fs.readFileSync(process.env.SSL_KEY_PATH, `utf8`);
+    const certificate = fs.readFileSync(process.env.SSL_CRT_PATH, `utf8`);
+    const credentials = {
+        key: privateKey,
+        cert: certificate
+    };
     let httpServer = http.createServer(app);
     let httpsServer = https.createServer(credentials, app);
     httpServer.listen(8080)
