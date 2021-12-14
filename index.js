@@ -9,6 +9,10 @@ const app = express();
 const port = 3000;
 
 let recentData = {};
+let hashrateData = {
+    "labels": [],
+    "data": []
+};
 
 formatHash = (rawHashes) => {
 
@@ -68,6 +72,7 @@ fetchData = async (address="83iyvgajvmCSMLeZsEpQUbP3LwxU1zxsGVaTJ2G8n7CBVHQvsHeE
     };
     
     let fetchedData = await(await fetch(`${process.env.POOL_ENDPOINT}/stats`, opts)).json();
+    fetchedData["pool_hashrate_raw"] = fetchedData["pool_hashrate"];
     fetchedData["pool_hashrate"] = formatHash(fetchedData["pool_hashrate"]);
     fetchedData["network_hashrate"] = formatHash(fetchedData["network_hashrate"]);
     fetchedData["network_height"] = formatNumber(fetchedData["network_height"]);
@@ -84,6 +89,10 @@ fetchData = async (address="83iyvgajvmCSMLeZsEpQUbP3LwxU1zxsGVaTJ2G8n7CBVHQvsHeE
 
 updateData = async () => {
     recentData = await fetchData();
+    hashrateData["labels"].push((new Date().toLocaleTimeString()).substring(0, 5));
+    hashrateData["data"].push(recentData["pool_hashrate_raw"]);
+    hashrateData["labels"] = hashrateData["labels"].slice(-1440);
+    hashrateData["data"] = hashrateData["data"].slice(-1440);
 };
 
 updateData()
@@ -121,6 +130,17 @@ app.get(`/stats/:address`, async (req, res) => {
     let cxData = await fetchData(req.params["address"]);
     cxData["address"] = req.params["address"];
     res.render(`index`, {
+        data: cxData
+    });
+})
+
+app.get(`/24h`, async (req, res) => {
+    let cxData = await fetchData(req.params["address"]);
+    cxData["pool_hr_24h"] = {
+        "labels": JSON.stringify(hashrateData["labels"]).replace(`"`, `\"`),
+        "data": JSON.stringify(hashrateData["data"]).replace(`"`, `\"`)
+    };
+    res.render(`24h`, {
         data: cxData
     });
 })

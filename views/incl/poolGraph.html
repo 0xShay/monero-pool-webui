@@ -1,0 +1,82 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="row mb-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header p-2">24h Pool Hashrate</div>
+            <div class="h-100">
+                <canvas class="mt-4 mb-4 ml-4 mr-4" id="pool_hr_24h"></canvas>
+            </div>
+            <script>
+
+                formatHash = (rawHashes) => {
+
+                    // THIS IS NOT OG FUNCTION, EDITED FOR GRAPH PURPOSES
+
+                    /* 1 PH/s is 1,000,000,000,000,000 hashes per second. */
+                    if ((rawHashes / 1e16) > 1) return `${(rawHashes / 1e15).toFixed(2)} PH/s`;
+
+                    /* 1 TH/s is 1,000,000,000,000 hashes per second. */
+                    if ((rawHashes / 1e13) > 1) return `${(rawHashes / 1e12).toFixed(2)} TH/s`;
+
+                    /* 1 GH/s is 1,000,000,000 hashes per second. */
+                    if ((rawHashes / 1e10) > 1) return `${(rawHashes / 1e9).toFixed(2)} GH/s`;
+
+                    /* 1 MH/s is 1,000,000 hashes per second. */
+                    if ((rawHashes / 1e7) > 1) return `${(rawHashes / 1e6).toFixed(2)} MH/s`;
+
+                    /* 1 kH/s is 1,000 hashes per second (sometimes mistakenly written KH/s). */
+                    if ((rawHashes / 1e4) > 1) return `${(rawHashes / 1e3).toFixed(2)} kH/s`;
+
+                    /* 1 H/s is 1 hash per second. */
+                    return `${Math.floor(rawHashes)} H/s`;
+
+                };
+
+                let labels = JSON.parse(`<%- data.pool_hr_24h.labels %>`);
+                let chartData = JSON.parse(`<%- data.pool_hr_24h.data %>`);
+
+                const data = {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Pool hashrate',
+                        backgroundColor: 'rgb(255, 102, 0)',
+                        borderColor: 'rgb(255, 102, 0)',
+                        data: chartData,
+                        fill: {
+                            target: 'origin',
+                            above: 'rgba(255, 102, 0, 0.4)',   // Area will be red above the origin
+                            below: 'rgba(255, 102, 0, 0.4)'    // And blue below the origin
+                        }
+                    }]
+                };
+                const myChart = new Chart(
+                    document.getElementById('pool_hr_24h'),
+                    {
+                        type: 'line',
+                        data: data,
+                        options: {
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            scales: {
+                                y: {
+                                    ticks: {
+                                        callback: function(item, index, values) {
+                                            return formatHash(item);
+                                        },
+                                    },
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    }
+                );
+
+            </script>
+        </div>
+    </div>
+</div>
