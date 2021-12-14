@@ -89,7 +89,8 @@ fetchData = async (address="83iyvgajvmCSMLeZsEpQUbP3LwxU1zxsGVaTJ2G8n7CBVHQvsHeE
 
 updateData = async () => {
     recentData = await fetchData();
-    hashrateData["labels"].push((new Date().toLocaleTimeString()).substring(0, 5));
+    let timeNow = (new Date().toLocaleTimeString()).split(":");
+    hashrateData["labels"].push(`${timeNow[0]}:${timeNow[1]}`);
     hashrateData["data"].push(recentData["pool_hashrate_raw"]);
     hashrateData["labels"] = hashrateData["labels"].slice(-1440);
     hashrateData["data"] = hashrateData["data"].slice(-1440);
