@@ -88,12 +88,18 @@ fetchData = async (address="83iyvgajvmCSMLeZsEpQUbP3LwxU1zxsGVaTJ2G8n7CBVHQvsHeE
 };
 
 let addGraphData = 0;
+let last5 = []
 updateData = async () => {
     recentData = await fetchData();
+    last5.append(recentData["pool_hashrate_raw"]);
+    last5 = last5.slice(-5);
     if (addGraphData % 5 == 0) {
+        let last5sum = 0;
+        last5.forEach(n => last5sum += n);
+        let last5avg = last5sum / last5.length;
         let timeNow = (new Date().toLocaleTimeString()).split(":");
         hashrateData["labels"].push(`${timeNow[0]}:${timeNow[1]}`);
-        hashrateData["data"].push(recentData["pool_hashrate_raw"]);
+        hashrateData["data"].push(last5avg);
         hashrateData["labels"] = hashrateData["labels"].slice(-288);
         hashrateData["data"] = hashrateData["data"].slice(-288);
     }
