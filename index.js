@@ -156,6 +156,12 @@ app.get(`/stats/:address`, async (req, res) => {
     });
 })
 
+app.get(`/motive`, async (req, res) => {
+    res.render(`motive`, {
+        data: recentData
+    });
+})
+
 app.get(`/24h`, async (req, res) => {
     let cxData = await fetchData(req.params["address"]);
     cxData["pool_hr_24h"] = {
@@ -164,6 +170,12 @@ app.get(`/24h`, async (req, res) => {
     };
     res.render(`24h`, {
         data: cxData
+    });
+})
+
+app.get(`/links`, async (req, res) => {
+    res.render(`links`, {
+        data: recentData
     });
 })
 
