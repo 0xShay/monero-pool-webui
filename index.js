@@ -91,7 +91,7 @@ let addGraphData = 0;
 let last5 = []
 updateData = async () => {
     recentData = await fetchData();
-    last5.append(recentData["pool_hashrate_raw"]);
+    last5.push(recentData["pool_hashrate_raw"]);
     last5 = last5.slice(-5);
     if (addGraphData % 5 == 0) {
         let last5sum = 0;
