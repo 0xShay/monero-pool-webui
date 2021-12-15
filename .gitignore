@@ -1,3 +1,5 @@
 
 node_modules/*
 .env
+
+data/pool_hr_24h.json
