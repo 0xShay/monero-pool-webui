@@ -87,17 +87,17 @@ fetchData = async (address="83iyvgajvmCSMLeZsEpQUbP3LwxU1zxsGVaTJ2G8n7CBVHQvsHeE
 
 };
 
-let addGraphData = true;
+let addGraphData = 0;
 updateData = async () => {
     recentData = await fetchData();
-    if (addGraphData) {
+    if (addGraphData % 5 == 0) {
         let timeNow = (new Date().toLocaleTimeString()).split(":");
         hashrateData["labels"].push(`${timeNow[0]}:${timeNow[1]}`);
         hashrateData["data"].push(recentData["pool_hashrate_raw"]);
-        hashrateData["labels"] = hashrateData["labels"].slice(-720);
-        hashrateData["data"] = hashrateData["data"].slice(-720);
+        hashrateData["labels"] = hashrateData["labels"].slice(-288);
+        hashrateData["data"] = hashrateData["data"].slice(-288);
     }
-    addGraphData = !addGraphData;
+    addGraphData += 1;
 };
 
 updateData()
