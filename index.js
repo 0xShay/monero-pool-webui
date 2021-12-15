@@ -5,6 +5,8 @@ const env = require(`dotenv`).config({ path: '.env' });
 const http = require(`http`);
 const https = require(`https`);
 
+let pool_hr_24h = require(`./data/pool_hr_24h.json`);
+
 const app = express();
 const port = 3000;
 
@@ -13,6 +15,11 @@ let hashrateData = {
     "labels": [],
     "data": []
 };
+
+Object.entries(pool_hr_24h).forEach(entry => {
+    hashrateData["labels"].push(entry[0]);
+    hashrateData["data"].push(entry[1]);
+});
 
 formatHash = (rawHashes) => {
 
@@ -87,23 +94,27 @@ fetchData = async (address="83iyvgajvmCSMLeZsEpQUbP3LwxU1zxsGVaTJ2G8n7CBVHQvsHeE
 
 };
 
-let addGraphData = 0;
 let last5 = []
 updateData = async () => {
     recentData = await fetchData();
     last5.push(recentData["pool_hashrate_raw"]);
-    last5 = last5.slice(-5);
-    if (addGraphData % 5 == 0) {
+    if ((new Date()).getMinutes() % 5 == 0) {
+        last5 = last5.slice(-5);
         let last5sum = 0;
         last5.forEach(n => last5sum += n);
         let last5avg = last5sum / last5.length;
-        let timeNow = (new Date().toLocaleTimeString()).split(":");
-        hashrateData["labels"].push(`${timeNow[0]}:${timeNow[1]}`);
+        let timeNow = (new Date().toLocaleTimeString()).split(":")[0] + ":" + (new Date().toLocaleTimeString()).split(":")[1];
+        hashrateData["labels"].push(timeNow);
         hashrateData["data"].push(last5avg);
         hashrateData["labels"] = hashrateData["labels"].slice(-288);
         hashrateData["data"] = hashrateData["data"].slice(-288);
+
+        pool_hr_24h[timeNow] = last5avg;
+        fs.writeFile(`data/pool_hr_24h.json`, JSON.stringify(pool_hr_24h), err => {
+            if (err) console.log(err);
+        });
+
     }
-    addGraphData += 1;
 };
 
 updateData()
