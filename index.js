@@ -11,14 +11,10 @@ const app = express();
 const port = 3000;
 
 let recentData = {};
-let hashrateData = {
-    "labels": [],
-    "data": []
-};
+let hashrateData = [];
 
-Object.entries(pool_hr_24h).forEach(entry => {
-    hashrateData["labels"].push(entry[0]);
-    hashrateData["data"].push(entry[1]);
+pool_hr_24h.forEach(entry => {
+    hashrateData.push([entry[0], entry[1]]);
 });
 
 formatHash = (rawHashes) => {
@@ -104,12 +100,10 @@ updateData = async () => {
         last10.forEach(n => last10sum += n);
         let last10avg = last10sum / last10.length;
         let timeNow = (new Date().toLocaleTimeString()).split(":")[0] + ":" + (new Date().toLocaleTimeString()).split(":")[1];
-        hashrateData["labels"].push(timeNow);
-        hashrateData["data"].push(last10avg);
-        hashrateData["labels"] = hashrateData["labels"].slice(-288);
-        hashrateData["data"] = hashrateData["data"].slice(-288);
+        hashrateData.push([timeNow, last10avg])
+        hashrateData.slice(-144)
 
-        pool_hr_24h[timeNow] = last10avg;
+        pool_hr_24h.push[timeNow, last10avg];
         fs.writeFile(`data/pool_hr_24h.json`, JSON.stringify(pool_hr_24h), err => {
             if (err) console.log(err);
         });
@@ -165,8 +159,8 @@ app.get(`/motive`, async (req, res) => {
 app.get(`/24h`, async (req, res) => {
     let cxData = await fetchData(req.params["address"]);
     cxData["pool_hr_24h"] = {
-        "labels": JSON.stringify(hashrateData["labels"]).replace(`"`, `\"`),
-        "data": JSON.stringify(hashrateData["data"]).replace(`"`, `\"`)
+        "labels": JSON.stringify(hashrateData.map(h => h[0])).replace(`"`, `\"`),
+        "data": JSON.stringify(hashrateData.map(h => h[1])).replace(`"`, `\"`)
     };
     res.render(`24h`, {
         data: cxData
