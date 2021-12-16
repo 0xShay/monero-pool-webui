@@ -104,7 +104,7 @@ updateData = async () => {
         hashrateData.slice(-144)
 
         pool_hr_24h.push[timeNow, last10avg];
-        fs.writeFile(`data/pool_hr_24h.json`, JSON.stringify(pool_hr_24h), err => {
+        fs.writeFile(`data/pool_hr_24h.json`, JSON.stringify(hashrateData), err => {
             if (err) console.log(err);
         });
 
