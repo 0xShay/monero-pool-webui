@@ -94,22 +94,22 @@ fetchData = async (address="83iyvgajvmCSMLeZsEpQUbP3LwxU1zxsGVaTJ2G8n7CBVHQvsHeE
 
 };
 
-let last5 = []
+let last10 = []
 updateData = async () => {
     recentData = await fetchData();
-    last5.push(recentData["pool_hashrate_raw"]);
-    if ((new Date()).getMinutes() % 5 == 0) {
-        last5 = last5.slice(-5);
-        let last5sum = 0;
-        last5.forEach(n => last5sum += n);
-        let last5avg = last5sum / last5.length;
+    last10.push(recentData["pool_hashrate_raw"]);
+    if ((new Date()).getMinutes() % 10 == 0) {
+        last10 = last10.slice(-10);
+        let last10sum = 0;
+        last10.forEach(n => last10sum += n);
+        let last10avg = last10sum / last10.length;
         let timeNow = (new Date().toLocaleTimeString()).split(":")[0] + ":" + (new Date().toLocaleTimeString()).split(":")[1];
         hashrateData["labels"].push(timeNow);
-        hashrateData["data"].push(last5avg);
+        hashrateData["data"].push(last10avg);
         hashrateData["labels"] = hashrateData["labels"].slice(-288);
         hashrateData["data"] = hashrateData["data"].slice(-288);
 
-        pool_hr_24h[timeNow] = last5avg;
+        pool_hr_24h[timeNow] = last10avg;
         fs.writeFile(`data/pool_hr_24h.json`, JSON.stringify(pool_hr_24h), err => {
             if (err) console.log(err);
         });
